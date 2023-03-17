@@ -4,6 +4,7 @@ Most functions in this library are async functions and therefore return promises
 
 ## Contents
 
+
 - Registry and Resolvers
 
   - [setupENS()](#async-function-setupensoptions-void)
