@@ -31,15 +31,18 @@ async function getEtherScanAddr() {
   switch (networkId) {
     case 1:
     case '1':
-      return 'https://ftmscan.io/'
+      return 'https://explorer-endurance.fusionist.io/'
     case 3:
     case '3':
       return 'https://ropsten.etherscan.io/'
     case 4:
     case '4':
       return 'https://rinkeby.etherscan.io/'
+    case 648:
+    case '648':
+      return 'https://explorer-endurance.fusionist.io/'
     default:
-      return 'https://ftmscan.io/'
+      return 'https://explorer-endurance.fusionist.io/'
   }
 }
 
@@ -48,10 +51,13 @@ async function getEnsStartBlock() {
   switch (networkId) {
     case 1:
     case '1':
-      return 3327417
+      return 1755637
     case 3:
     case '3':
       return 25409
+    case 648:
+    case '648':
+      return 1755637
     default:
       return 0
   }
@@ -106,7 +112,7 @@ const parseSearchTerm = (term, validTld) => {
     const termArray = term.split('.')
     const tld = term.match(regex) ? term.match(regex)[0] : ''
     if (validTld) {
-      if (tld === 'ftm' && termArray[termArray.length - 2].length < 3) {
+      if (tld === 'ace' && termArray[termArray.length - 2].length < 3) {
         return 'short'
       }
       return 'supported'

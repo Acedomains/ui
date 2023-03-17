@@ -637,7 +637,7 @@ export default class Registrar {
 }
 
 async function getEthResolver(ENS) {
-  const resolverAddr = await ENS.resolver(namehash('ftm'))
+  const resolverAddr = await ENS.resolver(namehash('ace'))
   console.log('resolver-638-Addr',resolverAddr)
 
   const provider = await getProvider()
@@ -650,21 +650,21 @@ export async function setupRegistrar(registryAddress) {
   const ENS = getENSContract({ address: registryAddress, provider })
   const Resolver = await getEthResolver(ENS)
   
-  let ethAddress = await ENS.owner(namehash('ftm'))
+  let ethAddress = await ENS.owner(namehash('ace'))
   console.log('eth_resolver', ethAddress);
 
   let controllerAddress = await Resolver.interfaceImplementer(
-    namehash('ftm'),
+    namehash('ace'),
     permanentRegistrarInterfaceId
   )
   console.log('controllerAddress',controllerAddress)
   let legacyAuctionRegistrarAddress = await Resolver.interfaceImplementer(
-    namehash('ftm'),
+    namehash('acec'),
     legacyRegistrarInterfaceId
   )
   console.log('legacyAuctionRegistrarAddress',legacyAuctionRegistrarAddress)
   let bulkRenewalAddress = await Resolver.interfaceImplementer(
-    namehash('ftm'),
+    namehash('ace'),
     bulkRenewalInterfaceId
   )
   console.log('bulkRenewalAddress',bulkRenewalAddress)
