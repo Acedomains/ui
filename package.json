@@ -1,18 +1,18 @@
 {
   "name": "@ace_domains/ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React UI components and reusable code",
   "main": "src/index.js",
   "files": [
     "src"
   ],
   "scripts": {
-    "test": "node_modules/.bin/jest --verbose",
-    "test:dev": "node_modules/.bin/jest --watch --verbose",
+    "test": "jest --verbose",
+    "test:dev": "jest --watch --verbose",
     "build": "babel src -d dist --ignore src/**/*.test.js,**/__tests__/**,src/testing-utils",
     "pub": "npm publish --access public"
   },
-  "author": "ace_domains",
+  "author": "acedomains",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -71,6 +71,14 @@
     "trailingComma": "none"
   },
   "publishConfig": {
-    "@ace_domains:registry": "https://npm.pkg.github.com"
- }
+    "@ace_domains:registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Acedomains/ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Acedomains/ui/issues"
+  },
+  "homepage": "https://github.com/Acedomains/ui#readme"
 }
