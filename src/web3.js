@@ -165,7 +165,7 @@ export function getNetworkProviderUrl(id) {
     case '648':
       return `https://rpc-endurance.fusionist.io`
     default:
-      return `https://rpc2.fantom.network/`
+      return `https://rpc-endurance.fusionist.io`
   }
 }
 
@@ -238,8 +238,7 @@ export async function getNetworkId() {
 export async function getNetwork() {
   const provider = await getWeb3()
   let network = await provider.getNetwork()
-  
-  if(network.name === 'unknown') network.name = 'Fantom'
+  if(network.name === 'unknown') network.name = 'Endurance'
   return network
 }
 

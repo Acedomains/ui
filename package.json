@@ -1,6 +1,6 @@
 {
   "name": "@ace_domains/ui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React UI components and reusable code",
   "main": "src/index.js",
   "files": [
