@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 16.x
           registry-url: 'https://registry.npmjs.org'
+          always-auth: true
       - run: npm i --force
       - run: npm run build
       - run: npm publish --access public
