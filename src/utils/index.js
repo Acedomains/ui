@@ -112,7 +112,7 @@ const parseSearchTerm = (term, validTld) => {
     const termArray = term.split('.')
     const tld = term.match(regex) ? term.match(regex)[0] : ''
     if (validTld) {
-      if (tld === 'ace' && termArray[termArray.length - 2].length < 3) {
+      if (tld === 'ace' && termArray[termArray.length - 2].length < 2) {
         return 'short'
       }
       return 'supported'
