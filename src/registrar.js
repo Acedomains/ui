@@ -10,7 +10,8 @@ import {
   getLegacyAuctionContract,
   getDeedContract,
   getTestRegistrarContract,
-  getBulkRenewalContract
+  getBulkRenewalContract,
+  getCouponsContract
 } from './contracts'
 
 import {
@@ -72,7 +73,8 @@ export default class Registrar {
     legacyAuctionRegistrarAddress,
     controllerAddress,
     bulkRenewalAddress,
-    provider
+    provider,
+    couponAddress
   }) {
     checkArguments({
       registryAddress,
@@ -99,6 +101,14 @@ export default class Registrar {
       provider
     })
 
+    if(couponAddress){
+      const couponsContract = getCouponsContract({
+        address: couponAddress, 
+        provider
+      })
+      this.couponsContract = couponsContract
+    }
+    
     const ENS = getENSContract({ address: registryAddress, provider })
 
     this.permanentRegistrar = permanentRegistrar
@@ -121,6 +131,24 @@ export default class Registrar {
   async getDeed(address) {
     const provider = await getProvider()
     return getDeedContract({ address, provider })
+  }
+
+  async getCoupons(){
+    const account = await getAccount()
+    if(account === '0x0') return [0, 0, 0, 0, 0]
+
+    const coupons = this.couponsContract
+    const userCoupons = await coupons.getCoupons(account)
+    return userCoupons
+  }
+
+  async getDiscounts(){
+    const account = await getAccount()
+    if(account === '0x0') return [0, 0, 0, 0, 0]
+    
+    const coupons = this.couponsContract
+    const userDiscounts = await coupons.getDiscounts(account)
+    return userDiscounts
   }
 
   async getLegacyEntry(label) {
@@ -304,8 +332,14 @@ export default class Registrar {
   }
 
   async getRentPrice(name, duration) {
+    const signer = await getSigner();
+    let price;
     const permanentRegistrarController = this.permanentRegistrarController
-    let price = await permanentRegistrarController.rentPrice(name, duration)
+    if(!signer){
+      price = await permanentRegistrarController.rentPrice(name, duration)
+    }else {
+      price = await permanentRegistrarController.connect(signer).rentPrice(name, duration)
+    }
     return price
   }
 
@@ -644,7 +678,7 @@ async function getEthResolver(ENS) {
   return getResolverContract({ address: resolverAddr, provider })
 }
 
-export async function setupRegistrar(registryAddress) {
+export async function setupRegistrar(registryAddress, couponAddress) {
   const provider = await getProvider()
   console.log('registryAddress',registryAddress)
   const ENS = getENSContract({ address: registryAddress, provider })
@@ -674,6 +708,7 @@ export async function setupRegistrar(registryAddress) {
     ethAddress,
     controllerAddress,
     bulkRenewalAddress,
-    provider
+    provider,
+    couponAddress
   })
 }
