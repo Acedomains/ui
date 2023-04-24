@@ -29,7 +29,7 @@ import {
   getReverseRegistrarContract,
   getENSContract,
   getResolverContract,
-  getOldResolverContract
+  getOldResolverContract, getUpgradeContract
 } from './contracts'
 
 import {
@@ -373,6 +373,20 @@ export class ENS {
   }
 
   /* non-constant functions */
+
+  async upgradeDomain(domainId, domainLabel, value, upgradeContractAddress, boosted=false) {
+    const provider = await getProvider()
+    const UpgraderWithoutSigner = getUpgradeContract({
+      address: upgradeContractAddress,
+      provider
+    })
+    const signer = await getSigner()
+    const Upgrader = UpgraderWithoutSigner.connect(signer);
+    const tx = await Upgrader.upgradeToPremium(domainId, domainLabel, boosted, {
+      value: value
+    })
+    return tx
+  }
 
   async setOwner(name, newOwner) {
     const ENSWithoutSigner = this.ENS

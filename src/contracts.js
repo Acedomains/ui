@@ -15,10 +15,15 @@ import { abi as dnsRegistrarContractOld } from '@ensdomains/contracts/abis/dnsre
 import { abi as legacyAuctionRegistrarContract } from '@ensdomains/contracts/abis/ens/HashRegistrar'
 import { abi as deedContract } from '@ensdomains/contracts/abis/ens/Deed'
 import { abi as couponsContract } from './contracts/DiscountCoupons.json'
+import { abi as upgradeContract } from './contracts/Premium.json'
 
 
 function getCouponsContract({ address, provider }){
   return new Contract(address, couponsContract, provider)
+}
+
+function getUpgradeContract({ address, provider }) {
+  return new Contract(address, upgradeContract, provider)
 }
 
 function getReverseRegistrarContract({ address, provider }) {
@@ -71,6 +76,7 @@ function getBulkRenewalContract({ address, provider }) {
 
 export {
   getCouponsContract,
+  getUpgradeContract,
   getTestRegistrarContract,
   getReverseRegistrarContract,
   getENSContract,
