@@ -67,10 +67,10 @@ const contracts = {
     registry: '0xc1394F5ba56d5A7b2149b66A8Ad71a462267dB11'
   },
   250: {
-	  registry: `0xc7054127a7BE821Bd6D4b9Acd7aA2169388F0e87`
+	  registry: `0x152764920dfE3B8152779863c5eF407CF7b61a92`
   },
   648: {
-	  registry: `0xc7054127a7BE821Bd6D4b9Acd7aA2169388F0e87`
+	  registry: `0x152764920dfE3B8152779863c5eF407CF7b61a92`
   },
 
 }
