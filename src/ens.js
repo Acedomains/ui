@@ -7,7 +7,7 @@ import {
   getAccount,
   getSigner
 } from './web3'
-import { formatsByName } from '@ensdomains/address-encoder'
+import { formatsByName } from '@ace_domains/address-encoder'
 import { abi as ensContract } from '@ensdomains/contracts/abis/ens/ENS.json'
 
 import { decryptHashes } from './preimage'
@@ -29,7 +29,9 @@ import {
   getReverseRegistrarContract,
   getENSContract,
   getResolverContract,
-  getOldResolverContract, getUpgradeContract
+  getOldResolverContract,
+  getUpgradeContract,
+  getAirdropContract,
 } from './contracts'
 
 import {
@@ -384,6 +386,20 @@ export class ENS {
     const Upgrader = UpgraderWithoutSigner.connect(signer);
     const tx = await Upgrader.upgradeToPremium(domainId, domainLabel, boosted, {
       value: value
+    })
+    return tx
+  }
+
+  async claimAirdrop(domainId, domainName, airdropContractAddress) {
+    const provider = await getProvider()
+    const AirdropWithoutSigner = getAirdropContract({
+      address: airdropContractAddress,
+      provider
+    })
+    const signer = await getSigner()
+    const Airdrop = AirdropWithoutSigner.connect(signer);
+    const tx = await Airdrop.claim(domainId, domainName, {
+      gasLimit: 150000
     })
     return tx
   }

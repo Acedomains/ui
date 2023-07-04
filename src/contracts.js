@@ -16,6 +16,7 @@ import { abi as legacyAuctionRegistrarContract } from '@ensdomains/contracts/abi
 import { abi as deedContract } from '@ensdomains/contracts/abis/ens/Deed'
 import { abi as couponsContract } from './contracts/DiscountCoupons.json'
 import { abi as upgradeContract } from './contracts/Premium.json'
+import { abi as airdropContract } from './contracts/AceDomainsAirdrop.json'
 
 
 function getCouponsContract({ address, provider }){
@@ -24,6 +25,10 @@ function getCouponsContract({ address, provider }){
 
 function getUpgradeContract({ address, provider }) {
   return new Contract(address, upgradeContract, provider)
+}
+
+function getAirdropContract({ address, provider }) {
+  return new Contract(address, airdropContract, provider)
 }
 
 function getReverseRegistrarContract({ address, provider }) {
@@ -77,6 +82,7 @@ function getBulkRenewalContract({ address, provider }) {
 export {
   getCouponsContract,
   getUpgradeContract,
+  getAirdropContract,
   getTestRegistrarContract,
   getReverseRegistrarContract,
   getENSContract,
