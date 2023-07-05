@@ -404,6 +404,108 @@ export class ENS {
     return tx
   }
 
+  async getCurrentPoolBalance(airdropContractAddress) {
+    const provider = await getProvider()
+    const AirdropWithoutSigner = getAirdropContract({
+      address: airdropContractAddress,
+      provider
+    })
+    const signer = await getSigner()
+    const Airdrop = AirdropWithoutSigner.connect(signer);
+    const tx = await Airdrop.getCurrentPoolBalance()
+    return tx
+  }
+
+  async getAirdropSuccessRate(domainLength, airdropContractAddress) {
+    const provider = await getProvider()
+    const AirdropWithoutSigner = getAirdropContract({
+      address: airdropContractAddress,
+      provider
+    })
+    const signer = await getSigner()
+    const Airdrop = AirdropWithoutSigner.connect(signer);
+    const tx = await Airdrop.getSuccessRate(domainLength)
+    return tx
+  }
+
+  async getCurrentEpoch(airdropContractAddress){
+    const provider = await getProvider()
+    const AirdropWithoutSigner = getAirdropContract({
+      address: airdropContractAddress,
+      provider
+    })
+    const signer = await getSigner()
+    const Airdrop = AirdropWithoutSigner.connect(signer);
+    const tx = await Airdrop.calculateEpoch()
+    return tx
+  }
+
+  async getClaimHistory(tokenId, epochAmount, airdropContractAddress) {
+    const provider = await getProvider()
+    const AirdropWithoutSigner = getAirdropContract({
+      address: airdropContractAddress,
+      provider
+    })
+    const signer = await getSigner()
+    const Airdrop = AirdropWithoutSigner.connect(signer);
+    // const tx = await Airdrop.calculateEpoch()
+    const promises = [];
+
+    for (let i = 0; i < epochAmount; i++) {
+      promises.push(
+        new Promise((resolve) => {
+          const claimPromise = Airdrop.claimHistory(
+            tokenId,
+            i
+          );
+
+          claimPromise.then((result) => {
+            resolve({
+              epoch: i,
+              result: result,
+            });
+          });
+        })
+      );
+    }
+
+    const queryHistory = await Promise.all(promises);
+
+    return queryHistory;
+  }
+
+  async getClaimSuccess(tokenId, epochAmount, airdropContractAddress) {
+    const provider = await getProvider()
+    const AirdropWithoutSigner = getAirdropContract({
+      address: airdropContractAddress,
+      provider
+    })
+    const signer = await getSigner()
+    const Airdrop = AirdropWithoutSigner.connect(signer);
+    // const tx = await Airdrop.calculateEpoch()
+    const promises = [];
+
+    for (let i = 0; i < epochAmount; i++) {
+      promises.push(
+        new Promise((resolve) => {
+          const successPromise = Airdrop.claimSuccess(
+            tokenId,
+            i
+          );
+
+          successPromise.then((result) => {
+            resolve({
+              epoch: i,
+              result: result,
+            });
+          });
+        })
+      );
+    }
+    const queryHistory = await Promise.all(promises);
+    return queryHistory;
+  }
+
   async setOwner(name, newOwner) {
     const ENSWithoutSigner = this.ENS
     const signer = await getSigner()
